@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block content %}
+
+
+        <!-- Contact Start -->
+        <div class="container-fluid py-5">
+            <div class="container py-5">
+                <div class="text-center mb-5 wow fadeInUp" data-wow-delay=".3s">
+                    <h5 class="mb-2 px-3 py-1 text-dark rounded-pill d-inline-block border border-2 border-primary">Newsletter</h5>
+                    <h1 class="display-5 w-50 mx-auto">Send Newsletter</h1>
+                </div>
+                {% for message in messages %}
+    <div id="message-{{ forloop.counter }}" class="container mt-3">
+      <div {% if message.tags %} class="alert alert-{{ message.tags }}"{% else %} class="alert alert-info"{% endif %} role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close" onclick="closeMessage({{ forloop.counter }})">
+          <span aria-hidden="true">&times;</span>
+        </button>
+
+        {{ message }}
+      </div>
+    </div>
+  {% endfor %}
+
+<script>
+  function closeMessage(id) {
+    var messageElement = document.getElementById("message-" + id);
+    if (messageElement) {
+      messageElement.remove();
+    }
+  }
+</script>
+
+<div class="rounded contact-form">
+  <form action="{% url 'nova_main:send_newsletter' %}" method="post">
+      {% csrf_token %}
+      
+      <div class="mb-4">
+          <input type="text" name="subject" class="form-control p-3" id="id_subject" placeholder="Subject" required="required" data-validation-required-message="Please enter a subject"/>
+          <p class="help-block text-danger"></p>
+      </div>
+      <div class="mb-4">
+          <textarea class="form-control p-3" rows="6" name="content" id="id_message" placeholder="Message" data-validation-required-message="Please enter your message"></textarea>
+          <p class="help-block text-danger"></p>
+      </div>
+      <div class="mb-4">
+          <p>
+              <input type="checkbox" name="send_to_all" class="form-check-input" id="id_send_to_all" checked hidden>
+          </p>
+      </div>
+      
+      <button class="btn btn-primary border-0 py-3 px-4 rounded-pill" id="id_content" type="submit">Send Message</button>
+  </form>
+</div>
+
+  <!-- <style>
+    #id_send_to_all {
+        display: none;
+    }
+    .contact-form {
+            width: 100%;
+            max-width: 800px; /* Increased max-width for the entire form */
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .form-control,
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            width: 100%;
+            max-width: 300px;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 768px) {
+            .contact-form {
+                padding: 10px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contact-form {
+                padding: 5px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+  </style> -->
+
+                    
+                </div>
+                <div class="row g-4 wow fadeInUp" data-wow-delay=".3s">
+                    <div class="col-xxl-3 col-lg-6 col-md-6 col-sm-12">
+                        <div class="d-flex bg-light p-3 rounded contact-btn-link">
+                            <div class="flex-shrink-0 d-flex align-items-center justify-content-center bg-primary rounded-circle p-3 ms-3" style="width: 64px; height: 64px;">
+                                <i class="fa fa-share text-dark"></i>
+                            </div>
+                            <div class="ms-3 contact-link">
+                                <h4 class="text-dark">follow Us</h4>
+                                <div class="d-flex justify-content-center">
+                                    <a class="pe-2" href="#"><i class="fab fa-facebook-f text-dark"></i></a>
+                                    <a class="px-2" href="#"><i class="fab fa-twitter text-dark"></i></a>
+                                    <a class="px-2" href="#"><i class="fab fa-instagram text-dark"></i></a>
+                                    <a class="px-2" href="#"><i class="fab fa-linkedin-in text-dark"></i></a>
+                                    <a class="px-2" href="#"><i class="fab fa-youtube text-dark"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-6 col-md-6 col-sm-12">
+                        <div class="d-flex bg-light p-3 rounded contact-btn-link">
+                            <div class="d-flex align-items-center justify-content-center bg-primary rounded-circle p-3 ms-3" style="width: 64px; height: 64px;">
+                                <i class="fas fa-map-marker-alt text-dark"></i>
+                            </div>
+                            <div class="ms-3 contact-link">
+                                <h4 class="text-dark">Address</h4>
+                                <a href="#">
+                                    <h5 class="text-dark d-inline fs-6">Kisii town po box 123</h5>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-6 col-md-6 col-sm-12">
+                        <div class="d-flex bg-light p-3 rounded contact-btn-link">
+                            <div class="d-flex align-items-center justify-content-center bg-primary rounded-circle p-3 ms-3" style="width: 64px; height: 64px;">
+                                <i class="fa fa-phone text-dark"></i>
+                            </div>
+                            <div class="ms-3 contact-link">
+                                <h4 class="text-dark">Call Us</h4>
+                                <a class="h5 text-dark fs-6" href="tel:+254708368885">+254708368885</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xxl-3 col-lg-6 col-md-6 col-sm-12">
+                        <div class="d-flex bg-light p-3 rounded contact-btn-link">
+                            <div class="d-flex align-items-center justify-content-center bg-primary rounded-circle p-3 ms-3" style="width: 64px; height: 64px;">
+                                <i class="fa fa-envelope text-dark"></i>
+                            </div>
+                            <div class="ms-3 contact-link">
+                                <h4 class="text-dark">Email Us</h4>
+                                <a class="h5 text-dark fs-6" href="mailto:regi.gwaro@gmail.com">regi.gwaro@gmail.com</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Contact End -->
+
+
+
+{% endblock %}
